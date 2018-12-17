@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
 from PyQt5.QtWidgets import QLCDNumber, QLabel, QLineEdit
-import random
+from random import choice
 
 
 
@@ -50,16 +50,21 @@ class Example(QWidget):
         self._elems["btn2"] = btn2
         self._elems["layout"] = start_layout
         
-        self.label_b = QLabel(self)
-        self.label_b.setText('Быки')
-        self.label_b.move(50,150)
+        self.btn_b = QPushButton('Быки', self)
+        self.btn_b.resize(self.btn_b.sizeHint())
+        self.btn_b.move(100, 150)
         
-        self.label_k = QLabel(self)
-        self.label_k.setText('Коровы')
-        self.label_k.move(50, 160)
+        self.btn_k = QPushButton('Коровы', self)
+        self.btn_k.resize(self.btn_k.sizeHint())
+        self.btn_k.move(100,200)
+        
+        
+    def count_b(self):
+        self.btn_b.setText('Быки:', self.bik)
         
 
-
+    def count_k(self):
+        self.btn_b.setText('Коровы:', self.korova)
     def hello(self):
         name = self._elems["name_input"].text()
         self._elems["label"].setText("Привет, {}".format(name))
@@ -92,26 +97,17 @@ class Example(QWidget):
     def corova_or_bik(self, input2):
         number = self._elems["number"]
         input2 = [input2[0], input2[1], input2[2], input2[3]]
-        bik = 0
-        korova = 0
+        self.bik = 0
+        self.korova = 0
         for i in range(4):
             if int(input2[i]) == number[i]:
-                bik += 1
+                self.bik += 1
+                self.btn_b.connect(self.count_b)
             elif int(input2[i]) in number:
-                korova += 1
-        if bik == 4:
+                self.korova += 1
+                self.btn_k.connect(self.count_k)
+        if self.bik == 4:
             print('Вы угадали!')
-        else:
-            print(bik, korova)
-        self.bik == bik
-        self.korova == korova
-    
-    def counting_b(self):
-        c_bik = self.bik
-        self.label_b.setText('Быки:', c_bik)
-    def counting_k(self):
-        c_korova = self.korova
-        self.label_k.setText('Коровы:', c_korova)
         
 
 
